@@ -36,20 +36,25 @@ if(isset($_POST["submit"])){
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <link href="styles.css" rel="stylesheet">
         <meta charset="utf-8">
         <title>Entrar</title>
     </head>
     <body>
-        <h2>Entrar</h2>
-        <form method="post" autocomplete="off">
-            <label for="usernameemail">Apelido ou Email:</label>
-            <input type="text" name="usernameemail" id="usernameemail" required> <br>
-            <label for="password">Senha:</label>
-            <input type="password" name="password" id="password" required> <br>
-            <button type="submit" name="submit">Entrar</button>
-        </form>
-        <br>
-        <a href="<?php echo DIR_PATH; ?>/registration.php">Cadastrar</a>
+        <?php include 'header.php'; ?>
+        <main>
+            <h2>Entrar</h2>
+            <form method="post" autocomplete="off">
+                <label for="usernameemail">Apelido ou Email:</label>
+                <input type="text" name="usernameemail" id="usernameemail" required> <br>
+                <label for="password">Senha:</label>
+                <input type="password" name="password" id="password" required> <br>
+                <button type="submit" name="submit">Entrar</button>
+            </form>
+            <br>
+            <a href="<?php echo DIR_PATH; ?>/registration.php">Cadastrar</a>
+        </main>
+        <?php include 'footer.php'; ?>
     </body>
 </html>
