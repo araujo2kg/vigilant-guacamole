@@ -11,7 +11,7 @@ if(!empty($_SESSION["id"])){
     $row = mysqli_fetch_assoc($result);
 }
 else{
-    header("Location: /seminario-project2/login.php");
+    header("Location:".DIR_PATH."/login.php");
 }
 ?>
 <!DOCTYPE html>
@@ -22,6 +22,6 @@ else{
     </head>
     <body>
         <h1>Bem vindo <?php echo $row["nome"]; ?>!</h1>
-        <a href="/seminario-project2/logout.php">Sair</a>
+        <a href="<?php echo DIR_PATH; ?>/logout.php">Sair</a>
     </body>
 </html>

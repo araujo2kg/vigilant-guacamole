@@ -5,6 +5,10 @@ error_reporting(E_ALL);
 
 
 session_start();
+
+$dir_path = dirname($_SERVER['SCRIPT_NAME']);
+define('DIR_PATH', $dir_path);
+
 $servername = "localhost";
 $username = "root";
 $password = "";

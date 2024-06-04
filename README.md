@@ -1,5 +1,5 @@
 ## database
-1. crie uma nova mysql database (ex: seminario-project)
+1. crie uma nova mysql database (default name = "seminario-project" modificar em config.php)
 2. importe o sql schema (seminario-project.sql) usando phpmyadmin ou mysql cli.
 
 ### phpmyadmin

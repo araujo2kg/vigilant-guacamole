@@ -8,5 +8,5 @@ require 'config.php';
 $_SESSION = [];
 session_unset();
 session_destroy();
-header("Location: /seminario-project2/login.php");
+header("Location:".DIR_PATH."/login.php");
 ?>

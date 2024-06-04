@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 
 require 'config.php';
 if(!empty($_SESSION["id"])){
-    header("Location: /seminario-project2/index.php");
+    header("Location:".DIR_PATH."/index.php");
 }
 if(isset($_POST["submit"])){
     $usernameemail = $_POST["usernameemail"];
@@ -17,7 +17,7 @@ if(isset($_POST["submit"])){
         if($password == $row["senha"]){
             $_SESSION["login"] = true;
             $_SESSION["id"] = $row["id"];
-            header("Location: /seminario-project2/index.php");
+            header("Location:".DIR_PATH."/index.php");
         }
         else{
             echo
@@ -46,6 +46,6 @@ if(isset($_POST["submit"])){
             <button type="submit" name="submit">Entrar</button>
         </form>
         <br>
-        <a href="/seminario-project2/registration.php">Cadastrar</a>
+        <a href="<?php echo DIR_PATH; ?>/registration.php">Cadastrar</a>
     </body>
 </html>
