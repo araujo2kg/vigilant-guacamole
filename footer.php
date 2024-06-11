@@ -1,5 +1,5 @@
         <footer>
-            <div class="container-fluid text-light bg-dark">
+            <div class="container-fluid text-light bg-transparent border">
                 <div class="row align-items-center">
                     <div class="col-md-6 text-center">
                         <div>SEMINÁRIO WEB 2024 &copy</div>

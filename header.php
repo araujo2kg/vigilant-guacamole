@@ -1,5 +1,5 @@
         <header id="top">
-            <nav class="navbar navbar-expand-md navbar-dark bg-dark w-100">
+            <nav class="navbar navbar-expand-md navbar-dark bg-dark w-100 position-absolute bg-transparent border-bottom">
                 <div class="container-fluid">
                     <a class="navbar-brand lead" href="#">Seminário</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

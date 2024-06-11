@@ -44,16 +44,16 @@ if(isset($_POST["submit"])){
     <body>
         <?php include 'header.php'; ?>
         <main>
-            <h2>Entrar</h2>
-            <form method="post" autocomplete="off">
-                <label for="usernameemail">Apelido ou Email:</label>
-                <input type="text" name="usernameemail" id="usernameemail" required> <br>
-                <label for="password">Senha:</label>
-                <input type="password" name="password" id="password" required> <br>
-                <button type="submit" name="submit">Entrar</button>
-            </form>
-            <br>
-            <a href="<?php echo DIR_PATH; ?>/registration.php">Cadastrar</a>
+            <div class="container text-center log-card" style="background-color: #ebeeef;">
+                <h2 class="display-4">Entrar</h2>
+                <form method="post" autocomplete="off">
+                    <input type="text" name="usernameemail" id="usernameemail" class="form-control" placeholder="Apelido ou Email" required>
+                    <input type="password" name="password" id="password" class="form-control" placeholder="Senha" required>
+                    <button type="submit" name="submit" class="btn btn-primary" style="margin: 10px 0;">Continuar</button><br>
+                    <span class="form-text">Não tem uma conta? <a href="<?php echo DIR_PATH; ?>/registration.php"> Cadastre-se agora!</a></span>
+                </form>
+                <br>
+            </div>
         </main>
         <?php include 'footer.php'; ?>
     </body>
