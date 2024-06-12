@@ -44,7 +44,7 @@ if(isset($_POST["submit"])){
     <body>
         <?php include 'header.php'; ?>
         <main>
-            <div class="container text-center log-card" style="background-color: #ebeeef;">
+            <div class="container text-center log-card">
                 <h2 class="display-4">Entrar</h2>
                 <form method="post" autocomplete="off">
                     <input type="text" name="usernameemail" id="usernameemail" class="form-control" placeholder="Apelido ou Email" required>

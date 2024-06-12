@@ -47,22 +47,25 @@ if(isset($_POST["submit"])){
     <body>
         <?php include 'header.php'; ?>
         <main>
-            <h2>Cadastro</h2>
-            <form method="post" autocomplete="off">
-                <label for="name">Nome :</label>
-                <input type="text" name="name" id="name" required> <br>
-                <label for="username">Apelido :</label>
-                <input type="text" name="username" id="username" required> <br>
-                <label for="email">Email :</label>
-                <input type="email" name="email" id="email" required> <br>
-                <label for="password">Senha :</label>
-                <input type="password" name="password" id="password" required> <br>
-                <label for="confirmpassword">Confirmação Senha :</label>
-                <input type="password" name="confirmpassword" id="confirmpassword" required> <br>
-                <button type="submit" name="submit">Cadastrar</button>
-            </form>
-            <br>
-            <a href="<?php echo DIR_PATH; ?>/login.php">Entrar</a>
+            <div class="container text-left log-card" style="margin-top: 55px;">
+                <h2 class="display-4">Cadastro</h2>
+                <form method="post" autocomplete="off">
+                    <label for="name" class="form-label align-control">Nome completo</label>
+                    <input type="text" name="name" id="name" class="form-control align-control" required> 
+                    <label for="username" class="form-label align-control">Apelido</label>
+                    <input type="text" name="username" id="username" class="form-control align-control" required> 
+                    <label for="email" class="form-label align-control">E-mail</label>
+                    <input type="email" name="email" id="email" class="form-control align-control" required> 
+                    <label for="password" class="form-label align-control">Senha</label>
+                    <input type="password" name="password" id="password" class="form-control align-control" required> 
+                    <label for="confirmpassword" class="form-label align-control">Confirmação Senha</label>
+                    <input type="password" name="confirmpassword" id="confirmpassword" class="form-control align-control" required> 
+                    <div class="text-center">
+                        <button type="submit" name="submit" class="btn btn-primary mb-2 mt-2">Continuar</button><br>
+                        <span class="form-text">Já tem uma conta? <a href="<?php echo DIR_PATH; ?>/login.php"> Entre!</a></span>
+                    </div>
+                </form>
+            </div>
         </main>
         <?php include 'footer.php'; ?>
     </body>

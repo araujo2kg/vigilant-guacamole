@@ -20,12 +20,11 @@ input {
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: #ebeeef;
     border: 1px solid #ccc;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.5);
     padding: 20px;
-
-    /* testing */
     transition: transform 0.3s ease;
 }
 .log-card:hover {
@@ -35,4 +34,13 @@ input {
 
 .container {
     width: 500px;
+}
+
+.align-control {
+    margin: 0; 
+}
+
+label {
+    color: #666;
+    font-family: opensans-regular,helvetica,arial,sans-serif;
 }
