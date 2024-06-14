@@ -28,8 +28,21 @@ else{
     <body>
         <?php include 'header.php'; ?>
         <main>
-            <h1>Bem vindo <?php echo $row["nome"]; ?>!</h1>
-            <a href="<?php echo DIR_PATH; ?>/logout.php">Sair</a>
+            <div class="container">
+                <div class="row" id="greeting">
+                    <h1>Bem vindo <?php echo $row["nome"]; ?>!</h1>
+                </div>
+                <div class="row" id="form-display">
+                    <div class="col-6" id="data-collect">
+                        <?php $date_test = date("Y-m-d");
+                        echo "<script> console.log('testing:  $date_test'); </script>";
+                        ?>
+
+                    </div>
+                    <div class="col-6" id="data-display"></div>
+                </div>
+                <div class="row" id="sleep-calc"></div>
+            </div>
         </main>
         <?php include 'footer.php'; ?>
     </body>
