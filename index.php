@@ -13,7 +13,14 @@ if(!empty($_SESSION["id"])){
 else{
     header("Location:".DIR_PATH."/login.php");
 }
+
+// Alerta se dados já foram enviados
+if (isset($_GET['message'])) {
+    echo "<script>alert('" . htmlspecialchars($_GET['message']) . "');</script>";
+}
+
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
     <head>
@@ -24,6 +31,11 @@ else{
         <link href="styles.css" rel="stylesheet">
         <meta charset="utf-8">
         <title>Início</title>
+        <style>
+            label {
+                color: white;
+            }
+        </style>
     </head>
     <body>
         <?php include 'header.php'; ?>
@@ -34,10 +46,29 @@ else{
                 </div>
                 <div class="row" id="form-display">
                     <div class="col-6" id="data-collect">
-                        <?php $date_test = date("Y-m-d");
-                        echo "<script> console.log('testing:  $date_test'); </script>";
-                        ?>
-
+                        <form action="process_data.php" method="post">
+                            <fieldset>
+                                <legend>Quantas horas você dormiu esta noite?</legend>
+                                <label><input type="radio" name="sleep-time" value="1" required> 1 hora</label>
+                                <label><input type="radio" name="sleep-time" value="2" required> 2 horas</label>
+                                <label><input type="radio" name="sleep-time" value="3" required> 3 horas</label>
+                                <label><input type="radio" name="sleep-time" value="4" required> 4 horas</label>
+                                <label><input type="radio" name="sleep-time" value="5" required> 5 horas</label>
+                                <label><input type="radio" name="sleep-time" value="6" required> 6 horas</label>
+                                <label><input type="radio" name="sleep-time" value="7" required> 7 horas</label>
+                                <label><input type="radio" name="sleep-time" value="8" required> 8 horas</label>
+                                <label><input type="radio" name="sleep-time" value="9" required> 9 horas</label>
+                            </fieldset>
+                            <fieldset>
+                                <legend>Quão bem você dormiu esta noite?</legend>
+                                <label><input type="radio" name="sleep-quality" value="1" required>Muito Mal</label>
+                                <label><input type="radio" name="sleep-quality" value="2" required>Mal</label>
+                                <label><input type="radio" name="sleep-quality" value="3" required>Ok</label>
+                                <label><input type="radio" name="sleep-quality" value="4" required>Bem</label>
+                                <label><input type="radio" name="sleep-quality" value="5" required>Muito Bem</label>
+                            </fieldset>
+                            <button type="submit">Enviar</button>
+                        </form>
                     </div>
                     <div class="col-6" id="data-display"></div>
                 </div>
