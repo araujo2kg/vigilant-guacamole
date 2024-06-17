@@ -20,6 +20,34 @@ if (isset($_GET['message'])) {
 }
 
 // Get the data to insert into the displays
+$current_date = date("Y-m-d");
+$monthly_date = date('Y-m-d', strtotime($current_date . ' - 1 month'));
+$weekly_date = date("Y-m-d", strtotime($current_date . ' - 1 week'));
+
+$monthly_sleep_quality_query = "SELECT sleep_quality, COUNT(*) AS count FROM sleep_data
+                        WHERE user_id = $id AND sleep_date BETWEEN '$monthly_date' AND '$current_date'
+                        GROUP BY sleep_quality";
+
+$monthly_quality_counts = [
+    '1' => 0,
+    '2' => 0,
+    '3' => 0,
+    '4' => 0,
+    '5' => 0
+];
+
+$monthly_results = mysqli_query($conn, $monthly_sleep_quality_query);
+if ($monthly_results){
+    while ($row_monthly = mysqli_fetch_assoc($monthly_results)) {
+            $sleep_quality = $row_monthly['sleep_quality'];
+            $count = $row_monthly['count'];
+            // Add the counts to the array
+            $monthly_quality_counts[$sleep_quality] = $count;
+    }
+}
+
+echo "<script> console.log('');</script>";
+
 
 ?>
 
