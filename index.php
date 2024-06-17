@@ -28,7 +28,20 @@ $monthly_sleep_quality_query = "SELECT sleep_quality, COUNT(*) AS count FROM sle
                         WHERE user_id = $id AND sleep_date BETWEEN '$monthly_date' AND '$current_date'
                         GROUP BY sleep_quality";
 
+$weekly_sleep_quality_query = "SELECT sleep_quality, COUNT(*) AS count FROM sleep_data
+                        WHERE user_id = $id AND sleep_date BETWEEN '$weekly_date' AND '$current_date'
+                        GROUP BY sleep_quality";
+
+
 $monthly_quality_counts = [
+    '1' => 0,
+    '2' => 0,
+    '3' => 0,
+    '4' => 0,
+    '5' => 0
+];
+
+$weekly_quality_counts = [
     '1' => 0,
     '2' => 0,
     '3' => 0,
@@ -46,8 +59,28 @@ if ($monthly_results){
     }
 }
 
-echo "<script> console.log('');</script>";
+$weekly_results = mysqli_query($conn, $weekly_sleep_quality_query);
+if ($weekly_results){
+    while ($row_weekly = mysqli_fetch_assoc($weekly_results)) {
+            $sleep_quality = $row_weekly['sleep_quality'];
+            $count = $row_weekly['count'];
+            // Add the counts to the array
+            $weekly_quality_counts[$sleep_quality] = $count;
+    }
+}
 
+$most_frequent_monthly = array_search(max($monthly_quality_counts), $monthly_quality_counts);
+$most_frequent_weekly = array_search(max($weekly_quality_counts), $weekly_quality_counts);
+
+$monthly_chart = [
+    'Muito Mal' => $monthly_quality_counts['1'],
+    'Mal' => $monthly_quality_counts['2'],
+    'Ok' => $monthly_quality_counts['3'],
+    'Bem' => $monthly_quality_counts['4'],
+    'Ótimo' => $monthly_quality_counts['5']
+];
+
+$monthly_json = json_encode($monthly_chart);
 
 ?>
 
@@ -74,18 +107,21 @@ echo "<script> console.log('');</script>";
             google.charts.setOnLoadCallback(drawChart);
 
             function drawChart() {
+                // Passar o php array convertido para json para a variavel js
+                var sleep_data = <?php echo $monthly_json; ?>;
 
-                var data = google.visualization.arrayToDataTable([
-                ['Task', 'Hours per Day'],
-                ['Work',     11],
-                ['Eat',      2],
-                ['Commute',  2],
-                ['Watch TV', 2],
-                ['Sleep',    7]
-                ]);
+                // Converter para o formato do google charts (lista de arrays)
+                var sleep_array = [['Quality', 'Count']];
+                Object.keys(sleep_data).forEach(function(key){
+                    sleep_array.push([key, Number(sleep_data[key])]);
+                });
+
+                console.log(sleep_array);
+
+                var data = google.visualization.arrayToDataTable(sleep_array);
 
                 var options = {
-                title: 'My Daily Activities',
+                title: 'Qualidade do sono mensalmente',
                 backgroundColor: 'transparent'
                 };
 
@@ -123,14 +159,14 @@ echo "<script> console.log('');</script>";
                                 <label><input type="radio" name="sleep-quality" value="2" required>Mal</label>
                                 <label><input type="radio" name="sleep-quality" value="3" required>Ok</label>
                                 <label><input type="radio" name="sleep-quality" value="4" required>Bem</label>
-                                <label><input type="radio" name="sleep-quality" value="5" required>Muito Bem</label>
+                                <label><input type="radio" name="sleep-quality" value="5" required>Ótimo</label>
                             </fieldset>
                             <button type="submit">Enviar</button>
                         </form>
                     </div>
                     <div class="col-6" id="data-display">
-                        <h3>Na maioria dos dias você se sente:</h3>
-                        <div id="piechart" class="chart" style="width: 900px; height: 500px;"></div>
+                        <p>Seu sono mais frequente é:</p>
+                        <div id="piechart" class="chart" style="width: 600px; height: 500px;"></div>
                     </div>
                 </div>
                 <div class="row" id="sleep-calc"></div>
