@@ -32,10 +32,6 @@ input {
     z-index: 10;
 }
 
-.container {
-    width: 500px;
-}
-
 .align-control {
     margin: 0; 
 }
@@ -43,4 +39,17 @@ input {
 label {
     color: #666;
     font-family: opensans-regular,helvetica,arial,sans-serif;
+}
+
+.data-collect {
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.data-display {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }

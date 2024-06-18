@@ -43,6 +43,11 @@ if(isset($_POST["submit"])){
         <link href="styles.css" rel="stylesheet">
         <meta charset="utf-8">
         <title>Cadastro</title>
+        <style>
+            .container {
+                width: 500px;
+            }
+        </style>
     </head>
     <body>
         <?php include 'header.php'; ?>

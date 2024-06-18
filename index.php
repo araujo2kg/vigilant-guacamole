@@ -80,8 +80,38 @@ $monthly_chart = [
     'Ótimo' => $monthly_quality_counts['5']
 ];
 
-$monthly_json = json_encode($monthly_chart);
+$weekly_chart = [
+    'Muito Mal' => $weekly_quality_counts['1'],
+    'Mal' => $weekly_quality_counts['2'],
+    'Ok' => $weekly_quality_counts['3'],
+    'Bem' => $weekly_quality_counts['4'],
+    'Ótimo' => $weekly_quality_counts['5']
+];
 
+$monthly_json = json_encode($monthly_chart);
+$weekly_json = json_encode($weekly_chart);
+
+$qualities = [
+    1 => 'Muito mal',
+    2 => 'Mal',
+    3 => 'Ok',
+    4 => 'Bem',
+    5 => 'Ótimo',
+];
+
+$monthly_average_query = "SELECT avg(sleep_quality) AS avg FROM sleep_data WHERE user_id = $id AND sleep_date BETWEEN '$monthly_date' AND '$current_date'";
+$monthly_average = mysqli_query($conn, $monthly_average_query);
+$monthly_average = mysqli_fetch_assoc($monthly_average);
+$monthly_average = intval(round($monthly_average['avg']));
+$monthly_average = $qualities[$monthly_average];
+
+$weekly_average_query = "SELECT avg(sleep_quality) AS avg FROM sleep_data WHERE user_id = $id AND sleep_date BETWEEN '$weekly_date' AND '$current_date'";
+$weekly_average = mysqli_query($conn, $weekly_average_query);
+$weekly_average = mysqli_fetch_assoc($weekly_average);
+$weekly_average = intval(round($weekly_average['avg']));
+$weekly_average = $qualities[$weekly_average];
+
+echo "<script> console.log('$current_date'); </script>";
 ?>
 
 <!DOCTYPE html>
@@ -105,41 +135,49 @@ $monthly_json = json_encode($monthly_chart);
         <script type="text/javascript">
             google.charts.load('current', {'packages':['corechart']});
             google.charts.setOnLoadCallback(drawChart);
+            google.charts.setOnLoadCallback(drawWeeklyChart);
 
             function drawChart() {
-                // Passar o php array convertido para json para a variavel js
-                var sleep_data = <?php echo $monthly_json; ?>;
-
-                // Converter para o formato do google charts (lista de arrays)
+                var sleep_data = <?php echo $monthly_json;?>;
                 var sleep_array = [['Quality', 'Count']];
                 Object.keys(sleep_data).forEach(function(key){
                     sleep_array.push([key, Number(sleep_data[key])]);
                 });
-
-                console.log(sleep_array);
-
                 var data = google.visualization.arrayToDataTable(sleep_array);
-
                 var options = {
-                title: 'Qualidade do sono mensalmente',
-                backgroundColor: 'transparent'
+                    title: 'Qualidade do sono mensalmente',
+                    backgroundColor: 'transparent',
+                    sliceVisibilityThreshold: 0,
                 };
-
                 var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                chart.draw(data, options);
+            }
 
+            function drawWeeklyChart() {
+                var sleep_data = <?php echo $weekly_json;?>;
+                var sleep_array = [['Quality', 'Count']];
+                Object.keys(sleep_data).forEach(function(key){
+                    sleep_array.push([key, Number(sleep_data[key])]);
+                });
+                var data = google.visualization.arrayToDataTable(sleep_array);
+                var options = {
+                    title: 'Qualidade do sono semanalmente',
+                    backgroundColor: 'transparent',
+                    sliceVisibilityThreshold: 0,
+                };
+                var chart = new google.visualization.PieChart(document.getElementById('weekly-piechart'));
                 chart.draw(data, options);
             }
         </script>
+
     </head>
     <body>
         <?php include 'header.php'; ?>
         <main>
-            <div class="container">
-                <div class="row" id="greeting">
+            <div class="container" style="margin-top: 100px;">
+                <div class="row">
+                    <div class="col-md-4 data-collect">
                     <h1>Bem vindo <?php echo $row["nome"]; ?>!</h1>
-                </div>
-                <div class="row" id="form-display">
-                    <div class="col-6" id="data-collect">
                         <form action="process_data.php" method="post">
                             <fieldset>
                                 <legend>Quantas horas você dormiu esta noite?</legend>
@@ -164,9 +202,19 @@ $monthly_json = json_encode($monthly_chart);
                             <button type="submit">Enviar</button>
                         </form>
                     </div>
-                    <div class="col-6" id="data-display">
-                        <p>Seu sono mais frequente é:</p>
+                    <div class="col-md-4 data-display">
+                        <div>Seu sono mais frequente no mês é:</div>
+                        <div id="most-frequent-month"><?php echo array_search(max($monthly_chart), $monthly_chart); ?> </div>
+                        <div>Mensalmente seu sono é em média:</div>
+                            <?php echo $monthly_average; ?>
                         <div id="piechart" class="chart" style="width: 600px; height: 500px;"></div>
+                    </div>
+                    <div class="col-md-4 data-display">
+                        <div>Seu sono mais frequente na semana é:</div>
+                        <div id="most-frequent-week"><?php echo array_search(max($weekly_chart), $weekly_chart); ?> </div>
+                        <div>Semanalmente seu sono é em média:</div>
+                            <?php echo $weekly_average; ?>
+                        <div id="weekly-piechart" class="chart" style="width: 600px; height: 500px;"></div>
                     </div>
                 </div>
                 <div class="row" id="sleep-calc"></div>
