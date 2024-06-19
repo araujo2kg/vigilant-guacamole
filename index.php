@@ -128,6 +128,13 @@ echo "<script> console.log('$current_date'); </script>";
             label {
                 color: white;
             }
+            h1 {
+                text-shadow: -1px -1px #fb6, 1px 1px #d60, -3px 0 4px #000;
+                font-family:"Segoe print", Arial, Helvetica, sans-serif;
+                color: #FF9933; 
+                font-weight:lighter;
+                display:inline;
+            }
         </style>
 
         <!-- google pie chart -->
@@ -174,13 +181,13 @@ echo "<script> console.log('$current_date'); </script>";
     <body>
         <?php include 'header.php'; ?>
         <main>
-            <div class="container" style="margin-top: 100px;">
-                <div class="row">
-                    <div class="col-md-4 data-collect">
+            <div class="container mt-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-4 data-collect text-center">
                     <h1>Bem vindo <?php echo $row["nome"]; ?>!</h1>
                         <form action="process_data.php" method="post">
                             <fieldset>
-                                <legend>Quantas horas você dormiu esta noite?</legend>
+                                <legend class="fs-5 fw-normal" style="color: white;">Quantas horas você dormiu esta noite?</legend>
                                 <label><input type="radio" name="sleep-time" value="1" required> 1 hora</label>
                                 <label><input type="radio" name="sleep-time" value="2" required> 2 horas</label>
                                 <label><input type="radio" name="sleep-time" value="3" required> 3 horas</label>
@@ -192,7 +199,7 @@ echo "<script> console.log('$current_date'); </script>";
                                 <label><input type="radio" name="sleep-time" value="9" required> 9 horas</label>
                             </fieldset>
                             <fieldset>
-                                <legend>Quão bem você dormiu esta noite?</legend>
+                                <legend class="fs-5 fw-normal" style="color: white;">Quão bem você dormiu esta noite?</legend>
                                 <label><input type="radio" name="sleep-quality" value="1" required>Muito Mal</label>
                                 <label><input type="radio" name="sleep-quality" value="2" required>Mal</label>
                                 <label><input type="radio" name="sleep-quality" value="3" required>Ok</label>
@@ -202,19 +209,21 @@ echo "<script> console.log('$current_date'); </script>";
                             <button type="submit">Enviar</button>
                         </form>
                     </div>
-                    <div class="col-md-4 data-display">
-                        <div>Seu sono mais frequente no mês é:</div>
-                        <div id="most-frequent-month"><?php echo array_search(max($monthly_chart), $monthly_chart); ?> </div>
-                        <div>Mensalmente seu sono é em média:</div>
-                            <?php echo $monthly_average; ?>
-                        <div id="piechart" class="chart" style="width: 600px; height: 500px;"></div>
+                    <div class="col-md-4 data-display text-center" style="border-right: 2px solid #ccc;">
+                        <h1>Mês</h1>
+                        <div class="fs-5 fw-normal" style="color: white;">Seu sono mais frequente no mês é:</div>
+                        <div class="most-frequent"><?php echo array_search(max($monthly_chart), $monthly_chart); ?> </div>
+                        <div class="fs-5 fw-normal" style="color: white;">Mensalmente seu sono é em média:</div>
+                        <div class="most-frequent"> <?php echo $monthly_average; ?> </div>
+                        <div id="piechart" class="chart"></div>
                     </div>
-                    <div class="col-md-4 data-display">
-                        <div>Seu sono mais frequente na semana é:</div>
-                        <div id="most-frequent-week"><?php echo array_search(max($weekly_chart), $weekly_chart); ?> </div>
-                        <div>Semanalmente seu sono é em média:</div>
-                            <?php echo $weekly_average; ?>
-                        <div id="weekly-piechart" class="chart" style="width: 600px; height: 500px;"></div>
+                    <div class="col-md-4 data-display text-center">
+                        <h1>Semana</h1>
+                        <div class="fs-5 fw-normal" style="color: white;">Seu sono mais frequente na semana é:</div>
+                        <div class="most-frequent"><?php echo array_search(max($weekly_chart), $weekly_chart); ?> </div>
+                        <div class="fs-5 fw-normal" style="color: white;">Semanalmente seu sono é em média:</div>
+                        <div class="most-frequent"> <?php echo $weekly_average; ?> </div>
+                        <div id="weekly-piechart" class="chart"></div>
                     </div>
                 </div>
                 <div class="row" id="sleep-calc"></div>
