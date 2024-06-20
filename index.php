@@ -133,7 +133,7 @@ echo "<script> console.log('$current_date'); </script>";
                 font-family:"Segoe print", Arial, Helvetica, sans-serif;
                 color: #FF9933; 
                 font-weight:lighter;
-                display:inline;
+                margin-bottom: 10px;
             }
         </style>
 
@@ -152,9 +152,11 @@ echo "<script> console.log('$current_date'); </script>";
                 });
                 var data = google.visualization.arrayToDataTable(sleep_array);
                 var options = {
-                    title: 'Qualidade do sono mensalmente',
+                    title: 'Distribuição Mensal da Qualidade do Sono:',
                     backgroundColor: 'transparent',
                     sliceVisibilityThreshold: 0,
+                    titleTextStyle: {color: '#fff'},
+                    legend: {textStyle: {color: '#fff'}},
                 };
                 var chart = new google.visualization.PieChart(document.getElementById('piechart'));
                 chart.draw(data, options);
@@ -168,9 +170,11 @@ echo "<script> console.log('$current_date'); </script>";
                 });
                 var data = google.visualization.arrayToDataTable(sleep_array);
                 var options = {
-                    title: 'Qualidade do sono semanalmente',
+                    title: 'Distribuição Semanal da Qualidade do Sono:',
                     backgroundColor: 'transparent',
                     sliceVisibilityThreshold: 0,
+                    titleTextStyle: {color: '#fff'},
+                    legend: {textStyle: {color: '#fff'}},
                 };
                 var chart = new google.visualization.PieChart(document.getElementById('weekly-piechart'));
                 chart.draw(data, options);
@@ -181,14 +185,15 @@ echo "<script> console.log('$current_date'); </script>";
     <body>
         <?php include 'header.php'; ?>
         <main>
-            <div class="container mt-5">
+            <div class="container-fluid mt-5">
                 <div class="row justify-content-center">
                     <div class="col-md-4 data-collect text-center">
                     <h1>Bem vindo <?php echo $row["nome"]; ?>!</h1>
                         <form action="process_data.php" method="post">
                             <fieldset>
                                 <legend class="fs-5 fw-normal" style="color: white;">Quantas horas você dormiu esta noite?</legend>
-                                <label><input type="radio" name="sleep-time" value="1" required> 1 hora</label>
+                                <div class="radio-grid">
+                                <label><input type="radio" name="sleep-time" value="1" required> 1 hora&nbsp;&nbsp;</label>
                                 <label><input type="radio" name="sleep-time" value="2" required> 2 horas</label>
                                 <label><input type="radio" name="sleep-time" value="3" required> 3 horas</label>
                                 <label><input type="radio" name="sleep-time" value="4" required> 4 horas</label>
@@ -197,6 +202,7 @@ echo "<script> console.log('$current_date'); </script>";
                                 <label><input type="radio" name="sleep-time" value="7" required> 7 horas</label>
                                 <label><input type="radio" name="sleep-time" value="8" required> 8 horas</label>
                                 <label><input type="radio" name="sleep-time" value="9" required> 9 horas</label>
+                                </div>
                             </fieldset>
                             <fieldset>
                                 <legend class="fs-5 fw-normal" style="color: white;">Quão bem você dormiu esta noite?</legend>
@@ -206,7 +212,7 @@ echo "<script> console.log('$current_date'); </script>";
                                 <label><input type="radio" name="sleep-quality" value="4" required>Bem</label>
                                 <label><input type="radio" name="sleep-quality" value="5" required>Ótimo</label>
                             </fieldset>
-                            <button type="submit">Enviar</button>
+                            <button type="submit" class="btn btn-primary" style="margin: 10px 0; background-color: #f96d00;">Enviar</button>
                         </form>
                     </div>
                     <div class="col-md-4 data-display text-center" style="border-right: 2px solid #ccc;">

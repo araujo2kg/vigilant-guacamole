@@ -1,5 +1,5 @@
 body {
-    background-image: url('https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=1429&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+    background-image: linear-gradient(to bottom, #10499f, #1856a5, #2463ab, #326faf, #427bb3);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -63,4 +63,16 @@ label {
     font-weight: bold;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 22px;
+    text-shadow: 1px 1px 1px #888;
+}
+
+.radio-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px 1px;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
