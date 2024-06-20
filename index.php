@@ -69,9 +69,6 @@ if ($weekly_results){
     }
 }
 
-$most_frequent_monthly = array_search(max($monthly_quality_counts), $monthly_quality_counts);
-$most_frequent_weekly = array_search(max($weekly_quality_counts), $weekly_quality_counts);
-
 $monthly_chart = [
     'Muito Mal' => $monthly_quality_counts['1'],
     'Mal' => $monthly_quality_counts['2'],
@@ -92,6 +89,7 @@ $monthly_json = json_encode($monthly_chart);
 $weekly_json = json_encode($weekly_chart);
 
 $qualities = [
+    0 => 'Dados insuficientes',
     1 => 'Muito mal',
     2 => 'Mal',
     3 => 'Ok',
@@ -102,16 +100,35 @@ $qualities = [
 $monthly_average_query = "SELECT avg(sleep_quality) AS avg FROM sleep_data WHERE user_id = $id AND sleep_date BETWEEN '$monthly_date' AND '$current_date'";
 $monthly_average = mysqli_query($conn, $monthly_average_query);
 $monthly_average = mysqli_fetch_assoc($monthly_average);
+if ($monthly_average['avg'] != NULL) {
 $monthly_average = intval(round($monthly_average['avg']));
+} else {
+    $monthly_average = 0;
+}
 $monthly_average = $qualities[$monthly_average];
 
 $weekly_average_query = "SELECT avg(sleep_quality) AS avg FROM sleep_data WHERE user_id = $id AND sleep_date BETWEEN '$weekly_date' AND '$current_date'";
 $weekly_average = mysqli_query($conn, $weekly_average_query);
 $weekly_average = mysqli_fetch_assoc($weekly_average);
+if ($weekly_average['avg'] != NULL) {
 $weekly_average = intval(round($weekly_average['avg']));
+} else {
+    $weekly_average = 0;
+}
 $weekly_average = $qualities[$weekly_average];
 
-echo "<script> console.log('$current_date'); </script>";
+
+if (max($monthly_chart) == 0) {
+    $most_frequent_monthly = 'Dados insuficientes';
+} else {
+$most_frequent_monthly = array_search(max($monthly_chart), $monthly_chart);
+}
+if (max($weekly_chart) == 0) {
+    $most_frequent_weekly = 'Dados insuficientes';
+} else {
+$most_frequent_weekly = array_search(max($weekly_chart), $weekly_chart);
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -146,7 +163,7 @@ echo "<script> console.log('$current_date'); </script>";
 
             function drawChart() {
                 var sleep_data = <?php echo $monthly_json;?>;
-                var sleep_array = [['Quality', 'Count']];
+                var sleep_array = [['Quality', 'Count'], ['Outro', 0.01]];
                 Object.keys(sleep_data).forEach(function(key){
                     sleep_array.push([key, Number(sleep_data[key])]);
                 });
@@ -164,7 +181,7 @@ echo "<script> console.log('$current_date'); </script>";
 
             function drawWeeklyChart() {
                 var sleep_data = <?php echo $weekly_json;?>;
-                var sleep_array = [['Quality', 'Count']];
+                var sleep_array = [['Quality', 'Count'], ['Outro', 0.01]];
                 Object.keys(sleep_data).forEach(function(key){
                     sleep_array.push([key, Number(sleep_data[key])]);
                 });
@@ -218,7 +235,7 @@ echo "<script> console.log('$current_date'); </script>";
                     <div class="col-md-4 data-display text-center" style="border-right: 2px solid #ccc;">
                         <h1>Mês</h1>
                         <div class="fs-5 fw-normal" style="color: white;">Seu sono mais frequente no mês é:</div>
-                        <div class="most-frequent"><?php echo array_search(max($monthly_chart), $monthly_chart); ?> </div>
+                        <div class="most-frequent"><?php echo $most_frequent_monthly; ?> </div>
                         <div class="fs-5 fw-normal" style="color: white;">Mensalmente seu sono é em média:</div>
                         <div class="most-frequent"> <?php echo $monthly_average; ?> </div>
                         <div id="piechart" class="chart"></div>
@@ -226,7 +243,7 @@ echo "<script> console.log('$current_date'); </script>";
                     <div class="col-md-4 data-display text-center">
                         <h1>Semana</h1>
                         <div class="fs-5 fw-normal" style="color: white;">Seu sono mais frequente na semana é:</div>
-                        <div class="most-frequent"><?php echo array_search(max($weekly_chart), $weekly_chart); ?> </div>
+                        <div class="most-frequent"><?php echo $most_frequent_weekly; ?> </div>
                         <div class="fs-5 fw-normal" style="color: white;">Semanalmente seu sono é em média:</div>
                         <div class="most-frequent"> <?php echo $weekly_average; ?> </div>
                         <div id="weekly-piechart" class="chart"></div>
