@@ -152,9 +152,29 @@ $most_frequent_weekly = array_search(max($weekly_chart), $weekly_chart);
                 font-weight:lighter;
                 margin-bottom: 10px;
             }
+
+            .form-check-input {
+                display: none;
+                }
+
+            .form-check-label {
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+            }
+
+            .form-check-input:checked + .form-check-label i {
+                color: #f96d00;
+            }
+
+            .form-check {
+                display: inline-flex;
+                align-items: center;
+            }
+
         </style>
 
-        <!-- google pie chart -->
+        <!-- Google Pie Chart -->
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript">
             google.charts.load('current', {'packages':['corechart']});
@@ -223,12 +243,38 @@ $most_frequent_weekly = array_search(max($weekly_chart), $weekly_chart);
                             </fieldset>
                             <fieldset>
                                 <legend class="fs-5 fw-normal" style="color: white;">Quão bem você dormiu esta noite?</legend>
-                                <label><input type="radio" name="sleep-quality" value="1" required>Muito Mal</label>
-                                <label><input type="radio" name="sleep-quality" value="2" required>Mal</label>
-                                <label><input type="radio" name="sleep-quality" value="3" required>Ok</label>
-                                <label><input type="radio" name="sleep-quality" value="4" required>Bem</label>
-                                <label><input type="radio" name="sleep-quality" value="5" required>Ótimo</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="sleep-quality" id="sleep-quality-1" value="1" required>
+                                    <label class="form-check-label" for="sleep-quality-1">
+                                        <i class="bi bi-emoji-angry" style="font-size: 2rem;"></i>
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="sleep-quality" id="sleep-quality-2" value="2" required>
+                                    <label class="form-check-label" for="sleep-quality-2">
+                                        <i class="bi bi-emoji-frown" style="font-size: 2rem;"></i>
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="sleep-quality" id="sleep-quality-3" value="3" required>
+                                    <label class="form-check-label" for="sleep-quality-3">
+                                        <i class="bi bi-emoji-neutral" style="font-size: 2rem;"></i>
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="sleep-quality" id="sleep-quality-4" value="4" required>
+                                    <label class="form-check-label" for="sleep-quality-4">
+                                        <i class="bi bi-emoji-smile" style="font-size: 2rem;"></i>
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="sleep-quality" id="sleep-quality-5" value="5" required>
+                                    <label class="form-check-label" for="sleep-quality-5">
+                                        <i class="bi bi-emoji-laughing" style="font-size: 2rem;"></i>
+                                    </label>
+                                </div>
                             </fieldset>
+                            <div id="quality-value" class="most-frequent">&nbsp;</div>
                             <button type="submit" class="btn btn-primary" style="margin: 10px 0; background-color: #f96d00;">Enviar</button>
                         </form>
                     </div>
@@ -253,5 +299,20 @@ $most_frequent_weekly = array_search(max($weekly_chart), $weekly_chart);
             </div>
         </main>
         <?php include 'footer.php'; ?>
+        <script>
+            document.querySelectorAll('.form-check-input').forEach(quality => {
+                quality.addEventListener('change', function() {
+                    let assoc = {
+                        1: "Muito Mal",
+                        2: "Mal",
+                        3: "Ok",
+                        4: "Bem",
+                        5: "Òtimo"
+                    }
+                    let quality_value = assoc[this.value];
+                    document.getElementById('quality-value').textContent = quality_value;
+                });
+            });
+        </script>
     </body>
 </html>
