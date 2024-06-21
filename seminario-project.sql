@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 31, 2024 at 11:18 PM
+-- Generation Time: Jun 22, 2024 at 12:25 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -24,6 +24,19 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `sleep_data`
+--
+
+CREATE TABLE `sleep_data` (
+  `user_id` int(11) NOT NULL,
+  `sleep_date` date NOT NULL,
+  `sleep_time` int(11) DEFAULT NULL,
+  `sleep_quality` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `usuarios`
 --
 
@@ -40,6 +53,12 @@ CREATE TABLE `usuarios` (
 --
 
 --
+-- Indexes for table `sleep_data`
+--
+ALTER TABLE `sleep_data`
+  ADD PRIMARY KEY (`user_id`,`sleep_date`);
+
+--
 -- Indexes for table `usuarios`
 --
 ALTER TABLE `usuarios`
@@ -54,6 +73,16 @@ ALTER TABLE `usuarios`
 --
 ALTER TABLE `usuarios`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `sleep_data`
+--
+ALTER TABLE `sleep_data`
+  ADD CONSTRAINT `sleep_data_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `usuarios` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
